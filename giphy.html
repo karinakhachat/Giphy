@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+  <head>
+
+    <meta charset="UTF-8">
+</head>
+
+    <body>
+        <div class= "buttons">
+
+        </div>
+
+        <div class= gifs>
+
+
+
+        </div>
+
+        <div class="searchbox">
+                <form id="food-form">
+                        <label for="food-input">Add your favorite food</label>
+                        <input type="text" id="food-input"><br>
+                  
+                       
+                        <input id="add-food" type="submit" value="Add a food">
+                      </form>
+                  
+        </div>
+
+        <script src="https://code.jquery.com/jquery.js"></script>
+
+        <script>
+           
+           
+           
+            //queryURl communicating
+            var foodpick = "";
+            var gifarray = ["sushi", "pizza", "cheeseburger", "cake","cookies","wine", "cereal",
+            "pretzels", "granola", "tacos"];
+                 console.log(gifarray)
+
+            for (var i=0; i < gifarray.length; i++) {
+                var b= $("<button>");
+                
+            //^^appending buttons for duration of the array
+               foodpick = gifarray[i];
+               b.text(foodpick);
+               b.val(foodpick);
+               $(".buttons").append(b);
+
+            }
+            
+            $(document).on("click", ".buttons", function() {
+                var button = $(this);
+                var food = button.val();
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + food + "&api_key=SrRKyPIQgQwhiZObRfEp4O2u95fMw8dY"
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function(response) {
+                    console.log(response);
+                   
+               
+               }); 
+
+            });
+        
+
+
+
+
+        
+        </script>
+
+    </body>
+
+</html>
