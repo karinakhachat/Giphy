@@ -14,7 +14,7 @@
 
         <div class="gifs">
 
-
+            <P>text</P>
 
         </div>
 
@@ -60,12 +60,35 @@
                     method: "GET"
                 }).then(function(response) {
                     console.log(response);
-                    $(".gifs").append(response);
+                    var result = response.data;
+
+                    for (var i; i < result.length; i ++){
+                        var p = $("<p>").text("Rating: " + result[i].rating)
+                        var foodimg = $("<img>");
+                        foodimg.attr("src", result[i].images.fixed_height.url)
+
+                        $(".gifs").append(p);
+                        $(".gifs").append(foodimg);
+                    }
                
                }); 
 
             });
         
+        $(document).on("click", "#submit", function usergif() {
+            var usrclick= $("#food-input").val();
+            console.log(usrclick);
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + usrclick + "&api_key=SrRKyPIQgQwhiZObRfEp4O2u95fMw8dY&limit=10"
+            $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function(response) {
+                    var userclick = response.data;
+                    console.log(userclick);
+                    
+                })
+        })
+
 
 
 
