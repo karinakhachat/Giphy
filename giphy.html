@@ -8,11 +8,11 @@
 </head>
 
     <body>
-        <div class= "buttons">
+        <div class="buttons">
 
         </div>
 
-        <div class= gifs>
+        <div class="gifs">
 
 
 
@@ -43,7 +43,6 @@
 
             for (var i=0; i < gifarray.length; i++) {
                 var b= $("<button>");
-                
             //^^appending buttons for duration of the array
                foodpick = gifarray[i];
                b.text(foodpick);
@@ -54,14 +53,14 @@
             
             $(document).on("click", ".buttons", function() {
                 var button = $(this);
-                var food = button.val();
-                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + food + "&api_key=SrRKyPIQgQwhiZObRfEp4O2u95fMw8dY"
+                var food = b.val();
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + food + "&api_key=SrRKyPIQgQwhiZObRfEp4O2u95fMw8dY&limit=10"
                 $.ajax({
                     url: queryURL,
                     method: "GET"
                 }).then(function(response) {
                     console.log(response);
-                   
+                    $(".gifs").append(response);
                
                }); 
 
