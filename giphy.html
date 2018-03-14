@@ -33,67 +33,66 @@
 
         <script>
            
-           
+           $(document).ready(function() {
            
             //queryURl communicating
             var foodpick = "";
             var gifarray = ["sushi", "pizza", "cheeseburger", "cake","cookies","wine", "cereal",
             "pretzels", "granola", "tacos"];
                  console.log(gifarray)
-
             for (var i=0; i < gifarray.length; i++) {
                 var b= $("<button>");
             //^^appending buttons for duration of the array
                foodpick = gifarray[i];
                b.text(foodpick);
-               b.val(foodpick);
+               b.attr("data-type", gifarray[i]);
+               b.addClass("foodbuttons");
                $(".buttons").append(b);
-
             }
             
-            $(document).on("click", ".buttons", function() {
+           $(document).on("click", ".foodbuttons", function() {
                 var button = $(this);
-                var food = b.val();
+                var food = $(this).attr("data-type");
                 var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + food + "&api_key=SrRKyPIQgQwhiZObRfEp4O2u95fMw8dY&limit=10"
+                console.log(queryURL)
+                console.log(food)
+                
                 $.ajax({
                     url: queryURL,
                     method: "GET"
                 }).then(function(response) {
                     console.log(response);
                     var result = response.data;
-
-                    for (var i; i < result.length; i ++){
+                    for (var i=0; i < result.length; i ++){
                         var p = $("<p>").text("Rating: " + result[i].rating)
                         var foodimg = $("<img>");
                         foodimg.attr("src", result[i].images.fixed_height.url)
-
-                        $(".gifs").append(p);
-                        $(".gifs").append(foodimg);
+                        $(".gifs").prepend(p);
+                        $(".gifs").prepend(foodimg);
                     }
                
                }); 
-
             });
+            
         
-        $(document).on("click", "#submit", function usergif() {
+        $(document).on("click", "#add-food", function(event) {
+            $(".buttons").empty();
+            event.preventDefault();
             var usrclick= $("#food-input").val();
-            console.log(usrclick);
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + usrclick + "&api_key=SrRKyPIQgQwhiZObRfEp4O2u95fMw8dY&limit=10"
-            $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                }).then(function(response) {
-                    var userclick = response.data;
-                    console.log(userclick);
-                    
-                })
+            gifarray.push(usrclick);
+            for (var i=0; i < gifarray.length; i++) {
+                var b= $("<button>");
+            //^^appending buttons for duration of the array
+               foodpick = gifarray[i];
+               b.text(foodpick);
+               b.attr("data-type", gifarray[i]);
+               b.addClass("foodbuttons");
+               $(".buttons").append(b);
+            }
+          
+            
         })
-
-
-
-
-
-        
+           })
         </script>
 
     </body>
